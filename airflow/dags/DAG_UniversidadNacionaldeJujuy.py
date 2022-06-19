@@ -1,5 +1,3 @@
-from asyncio.format_helpers import extract_stack
-import operator
 from airflow import DAG 
 from datetime import datetime,timedelta
 from airflow.operators.dummy  import DummyOperator
