@@ -1,7 +1,6 @@
+from datetime import datetime
 from airflow import DAG 
-from datetime import datetime,timedelta
 from airflow.operators.dummy  import DummyOperator
-
 """
 configuration of the DAG without queries or processing
 for National University of Jujuy
@@ -9,7 +8,8 @@ for National University of Jujuy
 with DAG (
           'DAG_Universidad_Nacional_de_Jujuy',
           description='DAG para la Universidad Nacional de Jujuy',
-          scheduler_interval=timedelta(hours=1), #execute each one hour
+          #execute each one hour
+          scheduler_interval="@hourly", 
           start_date=datetime(2022,6,19)
           ) as dag:
             #only the tasks of extrancting data , transforming them and uploading them are declare  

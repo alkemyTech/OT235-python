@@ -1,8 +1,6 @@
-from airflow import DAG 
 from datetime import datetime
+from airflow import DAG 
 from airflow.operators.dummy  import DummyOperator
-
-
 """
 configuration of the DAG without queries or processing 
 for University of Palermo
@@ -10,7 +8,8 @@ for University of Palermo
 with DAG(
         'DAG_Universidad_de_Palermo',
         description='DAG para la Universidad de Palermo',
-        schedule_interval= "@hourly", #execute each one hour
+        #execute each one hour
+        schedule_interval= "@hourly", 
         start_date=datetime(2022,6,19)
         ) as dag:
         #only the tasks of extrancting data , transforming them and uploading them are declare
