@@ -18,3 +18,4 @@ with DAG (
                 load_task=DummyOperator(task_id='transform_task')
             #the execution order of the DAG
                 extract_task >> transform_task >> load_task
+                
