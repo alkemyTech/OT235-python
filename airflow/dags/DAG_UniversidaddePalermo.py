@@ -1,12 +1,22 @@
 from datetime import datetime
 
+from datetime import timedelta
+
 from airflow import DAG
 
 from airflow.operators.dummy import DummyOperator
 
 """
-configuration of the DAG without queries or processing for University of Palermo
+Configure the retries with the connection to the database for the University of Palermo
 """
+
+# configuration of retries
+Default_args = {
+'owner': 'airflow',
+'retries': 5,
+'retry_delay': timedelta(minutes=5)
+}
+
 with DAG(
         'DAG_Universidad_de_Palermo',
         description='DAG para la Universidad de Palermo',
