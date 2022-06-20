@@ -11,9 +11,9 @@ with DAG(
         schedule_interval="@hourly", 
         start_date=datetime(2022, 6, 19)
         ) as dag:
-             # only the tasks of extrancting data , transforming them and uploading them are declare
+            # Data extraction, transformation and loading tasks are declared
             extract_task= DummyOperator(task_id='extract_task')
             transform_task= DummyOperator(task_id='transform_task')
-            load_task= DummyOperatortask_id=('load_task')
+            load_task= DummyOperator(task_id='load_task')
             # the execution order of the DAG
             extract_task >> transform_task >> load_task
