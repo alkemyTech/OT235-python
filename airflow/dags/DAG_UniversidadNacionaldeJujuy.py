@@ -8,7 +8,7 @@ from airflow.operators.dummy import DummyOperator
 configuration of the DAG without queries or processing for University of Palermo
 """
 with DAG(
-        'DAG_Universidad_de_Palermo',
+        'DAG_Universidad_Nacional_de_Jujuy',
         description='DAG para la Universidad Nacional de Jujuy',
         # execute each one hour
         schedule_interval="@hourly", 
