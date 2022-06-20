@@ -1,7 +1,20 @@
-
+import logging
 from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
+
+### LOGS ###
+
+FORMAT = '%(asctime)s %(name)s %(message)s' # Message format for the log
+
+logging.basicConfig(
+    level=logging.INFO, 
+    datefmt='%Y-%m-%d', 
+    format=FORMAT)
+
+logger = logging.getLogger('Universidades_B') # Logger's name
+
+logger.info('ETL para UNCOM y USAL') # Logger's message
 
 # Retries for connection
 
