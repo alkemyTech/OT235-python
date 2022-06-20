@@ -11,7 +11,7 @@ with DAG(
         schedule_interval="@hourly", 
         start_date=datetime(2022, 6, 19)
         ) as dag:
-            # only the tasks of extrancting data , transforming them and uploading them are declare
+             # only the tasks of extrancting data , transforming them and uploading them are declare
             extract_task= DummyOperator(task_id='extract_task')
             transform_task= DummyOperator(task_id='transform_task')
             load_task= DummyOperatortask_id=('load_task')
