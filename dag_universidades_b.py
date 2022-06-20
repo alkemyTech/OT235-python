@@ -3,6 +3,13 @@ from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 
+# Retries for connection
+
+args = {
+    'retries': 5,
+    'retry_delay': timedelta(minutes=5)
+}
+
 ### DAG with time interval between executions (1 hour) ###
 
 with DAG(
