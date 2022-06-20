@@ -3,6 +3,7 @@ from datetime import datetime
 from airflow import DAG
 
 from airflow.operators.dummy import DummyOperator
+
 """
 configuration of the DAG without queries or processing for University of Palermo
 """
