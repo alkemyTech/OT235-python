@@ -14,6 +14,6 @@ with DAG(
             # only the tasks of extrancting data , transforming them and uploading them are declare
             extract_task= DummyOperator(task_id='extract_task')
             transform_task= DummyOperator(task_id='transform_task')
-            load_task= DummyOperatortask_id='load_task')
+            load_task= DummyOperatortask_id=('load_task')
             # the execution order of the DAG
             extract_task >> transform_task >> load_task
