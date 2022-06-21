@@ -1,0 +1,38 @@
+"""\
+# DAG for ETL process for two universities
+
+        - Universidad Nacional De La Pampa
+        - Universidad Abierta Interamericana
+
+## Operators needed:
+
+        - PostgresOperator: for SQL code excecution
+        - PythonOperator: for processing data and loading in S3
+                        (S3Hook Class may be required)
+"""
+
+from airflow import DAG
+from datetime import timedelta, datetime
+from airflow.operators.dummy import DummyOperator
+
+default_args = {
+    'owner': 'pablo_correa',
+}
+
+with DAG(
+        'universidades',
+        description='ETL DAG for two universities',
+        default_args=default_args,
+        schedule_interval=timedelta(hours=1),
+        start_date=datetime(2022, 6, 21),
+        catchup=False
+) as dag:
+
+    dag.doc_md = __doc__  # refers to docstring at the beginning of the DAG
+
+#   tasks (dummy tasks must be replaced in future versions):
+    extract = DummyOperator(task_id='extract')
+    transform = DummyOperator(task_id='transform')
+    load = DummyOperator(task_id='load')
+
+    extract >> transform >> load
