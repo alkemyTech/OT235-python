@@ -30,8 +30,10 @@ with DAG(
 
     dag.doc_md = __doc__  # refers to docstring at the beginning of the DAG
 
-#   tasks (dummy tasks must be replaced in future versions):
-    extract = DummyOperator(task_id='extract')
+    # tasks (dummy tasks must be replaced in future versions):
+    # Retry configuration in Extract task where database connection takes place
+    extract = DummyOperator(task_id='extract', retries=5,
+                            retry_delay=timedelta(minutes=5))
     transform = DummyOperator(task_id='transform')
     load = DummyOperator(task_id='load')
 
