@@ -2,9 +2,27 @@ from asyncio import Task
 from datetime import timedelta
 from email.policy import default
 from airflow import DAG
+import logging
+
 
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
+
+#Log configuration
+#Format Settings
+format = '%(asctime)s - %(name)s - %(message)s'
+
+#Logging
+logging.basicConfig(
+level=logging.INFO, 
+datefmt='%y-%m-%d', 
+format=format)
+
+#Logger name
+logger = logging.getLogger('Universidades_A')
+
+#Logger message
+logger.info('ETL_for_universities')
 
 
 """
