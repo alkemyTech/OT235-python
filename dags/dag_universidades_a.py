@@ -64,9 +64,20 @@ with DAG(
 
     #define tasks
     
-    scrape_task=PythonOperator(task_id ='scrape', python_callable= scrape)
-    process_task=PythonOperator(task_id ='process', python_callable= process)
-    save_task=PythonOperator(task_id ='save', python_callable= save)
+    scrape_task=PythonOperator( task_id ='scrape', 
+                                python_callable= scrape, 
+                                dag= dag, 
+                                retries = 5)
+
+    process_task=PythonOperator( task_id ='process', 
+                                 python_callable= process, 
+                                 dag= dag, 
+                                 retries = 5)
+
+    save_task=PythonOperator( task_id ='save', 
+                              python_callable= save, 
+                              dag= dag, 
+                              retries = 5)
 
     #Dependency between tasks/order
 
