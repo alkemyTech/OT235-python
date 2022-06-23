@@ -5,36 +5,26 @@ from airflow.operators.dummy import DummyOperator
 
 #   Configuracion del logger
 logging.basicConfig(
-    filename='main.log'
-    level=logging.INFO,  
-    format='%(asctime)s %(name)s %(message)s'
+    filename='main.log',
+    level='DEBUG',  
+    format="%(asctime)s:%(levelname)s:%(message)s",
 )
-logger = logging.getLogger('Universidades_G')
 
-logger.info('ETL DAG para el grupo de universidades G')
+logging.info('Inicio del ETL para el grupo de universidades G.')
+
+default_args={
+    'owner' : 'lugones_nicolas',
+    'retries' : 5,
+}
 
 """ Definicion del DAG """
 with DAG(
     'universidades',
-    owner= 'lugones_nicolas'
-    description='ETL para Facultad Latinoamericana De Ciencias Sociales y Universidad J. F. Kennedy',
+    default_args=default_args,
     schedule_interval=timedelta(hours=1),
-    retries=5,
-    retry_delay= timedelta(minutes=5),
-    start_date=datetime(2022, 6, 20),
+    start_date=datetime(2023, 6, 20),
 
 ) as dag:
-    extract_u1 = DummyOperator(task_id='extract_u1')
-    transform_u1 = DummyOperator(task_id='transform_u1')
-    load_u1 = DummyOperator(task_id='load_u1')
+    pass
 
-    extract_u2 = DummyOperator(task_id='extract_u2')
-    transform_u2 = DummyOperator(task_id='transform_u2')
-    load_u2 = DummyOperator(task_id='load_u2')
-
-#   Tareas a realizar
-    extract_u1 >> load_u1 >> load_u1
-    logger.info('Se corrio el ETL Facultad Latinoamericana De Ciencias Sociales')
-
-    logger.info('Se corrio el ETL Universidad J. F. Kennedy')
-    extract_u2 >> load_u2 >> load_u2
+logging.info('Se corrio el DAG exitosamente.')
