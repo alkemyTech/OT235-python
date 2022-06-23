@@ -1,5 +1,5 @@
 from airflow import DAG
-from datetime import datetime
+from datetime import datetime, timedelta
 from airflow.operators.dummy import DummyOperator
 
 """
@@ -12,7 +12,9 @@ As for now only DummyOperator is used. Later PostgresOperator and PythonOperator
 
 
 default_args = {
-    'owner': 'guidocaru'
+    'owner': 'guidocaru',
+    'retries': 5,
+    'retry_delay': timedelta(minutes=2),
 }
 
 #DAG definition
