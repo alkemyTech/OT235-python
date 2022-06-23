@@ -14,6 +14,16 @@
 from airflow import DAG
 from datetime import timedelta, datetime
 from airflow.operators.dummy import DummyOperator
+import logging
+
+# logging configuration
+logging.basicConfig(level=logging.INFO,
+                    datefmt='%Y-%m-%d',
+                    format='%(asctime)s - %(name)s - %(message)s'
+                    )
+
+# Logger creation
+logger = logging.getLogger('Universidades-E')
 
 default_args = {
     'owner': 'pablo_correa',
@@ -27,6 +37,8 @@ with DAG(
         start_date=datetime(2022, 6, 21),
         catchup=False
 ) as dag:
+    # log message with logger name at the beggining of DAG
+    logger.info("")
 
     dag.doc_md = __doc__  # refers to docstring at the beginning of the DAG
 
