@@ -19,7 +19,7 @@ default_args={
 
 """ Definicion del DAG """
 with DAG(
-    'universidades',
+    'ETL_Universidades_Alkemy',
     default_args=default_args,
     schedule_interval=timedelta(hours=1),
     start_date=datetime(2023, 6, 20),
