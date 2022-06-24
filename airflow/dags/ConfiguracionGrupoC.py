@@ -1,9 +1,7 @@
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime,timedelta
 
 from airflow import DAG
 
-from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import PythonOperator
 
 import logging
@@ -18,13 +16,13 @@ def my_logs() :
 
 # configuration of retries
 default_args = {
-'owner': 'airflow',
-'retries': 5,
-'retry_delay': timedelta(minutes=5)
+    'owner': 'airflow',
+    'retries': 5,
+    'retry_delay': timedelta(minutes=5)
 }
 
 with DAG(
-    'DAG_Universidad',
+    'DAG_UniversidadesC',
     description='DAG para la Universidad',
     default_args=default_args,
     # execute each one hour
@@ -32,7 +30,5 @@ with DAG(
     start_date=datetime(2022, 6, 23)
     ) as dag:
         #logging task
-        logging_task = PythonOperator(task_id='logging_task',
-        python_callable=my_logs) 
-
+        logging_task = PythonOperator(task_id='logging_task',python_callable=my_logs)
         logging_task
