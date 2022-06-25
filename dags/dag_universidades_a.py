@@ -2,17 +2,28 @@ from asyncio import Task
 from datetime import timedelta
 from email.policy import default
 from airflow import DAG
-import logging
+from scripts.process import process_flores, process_v_maria
 
+import os
+import logging
 
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 
-#Log configuration
+"""
+workspace setup
+"""
+#get working directory
+root = os.path.dirname(os.getcwd())
+
+
+""" 
+    Log configuration
+"""
 #Format Settings
 format = '%(asctime)s - %(name)s - %(message)s'
 
-#Logging
+#Logging 
 logging.basicConfig(
 level=logging.INFO, 
 datefmt='%y-%m-%d', 
@@ -53,10 +64,13 @@ def scrape():
     pass
 
 def process():
-    pass
+    process_flores()
+    process_v_maria()
+
 
 def save():
     pass
+
 
 #Define dag
 
@@ -81,18 +95,18 @@ with DAG(
 ) as dag:
 
     #define tasks
-    
-    scrape_task=PythonOperator( task_id ='scrape', 
+
+    scrape_task=PythonOperator(task_id ='scrape',
                                 python_callable= scrape, 
                                 dag= dag, 
                                 retries = 5)
 
-    process_task=PythonOperator( task_id ='process', 
+    process_task=PythonOperator(task_id ='process', 
                                  python_callable= process, 
                                  dag= dag, 
                                  retries = 5)
 
-    save_task=PythonOperator( task_id ='save', 
+    save_task=PythonOperator(task_id ='save', 
                               python_callable= save, 
                               dag= dag, 
                               retries = 5)
