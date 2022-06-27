@@ -1,5 +1,5 @@
 """\
-# DAG for ETL process for two universities
+# DAG for ETL process for two universities (group-E)
 
         - Universidad Nacional De La Pampa
         - Universidad Abierta Interamericana
@@ -10,7 +10,6 @@
         - PythonOperator: for processing data and loading in S3
                         (S3Hook Class may be required)
 """
-
 from airflow import DAG
 from datetime import timedelta, datetime
 from airflow.operators.dummy import DummyOperator
@@ -30,7 +29,7 @@ default_args = {
 }
 
 with DAG(
-        'universidades',
+        'universidades_grupo_E_etl',
         description='ETL DAG for two universities',
         default_args=default_args,
         schedule_interval=timedelta(hours=1),
