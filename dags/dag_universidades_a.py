@@ -6,29 +6,23 @@ from datetime import timedelta
 from email.policy import default
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
+from scripts.scrape import create_csv_uni_a
 from scripts.process import process_flores, process_v_maria
-
-"""
-workspace setup
-"""
-#get working directory
-root=os.path.dirname(os.getcwd())
-
 
 """ 
     Log configuration
 """
 #Format Settings
-format='%(asctime)s - %(name)s - %(message)s'
+format= '%(asctime)s - %(name)s - %(message)s'
 
 #Logging 
 logging.basicConfig(
-level=logging.INFO, 
-datefmt='%y-%m-%d', 
-format=format)
+level= logging.INFO, 
+datefmt= '%y-%m-%d', 
+format= format)
 
 #Logger name
-logger=logging.getLogger('Universidades_A')
+logger= logging.getLogger('Universidades_A')
 
 #Logger message
 logger.info('ETL_for_universities')
@@ -46,20 +40,20 @@ Default arguments of each of our tasks.
 
 """
 default_args={
-    'owner':'Cristian Rosas',
-    'depends_on_past':False,
-    'email':['rosascristian26@gmail.com'],
-    'email_on_failure':False, 
-    'email_on_retry':False, 
-    'retries':1, 
-    'retry_delay':timedelta(minutes=5), 
+    'owner': 'Cristian Rosas',
+    'depends_on_past': False,
+    'email': ['rosascristian26@gmail.com'],
+    'email_on_failure': False, 
+    'email_on_retry': False, 
+    'retries': 1, 
+    'retry_delay': timedelta(minutes=5), 
 }
 
 
 #Define functions
 
 def scrape():
-    pass
+    create_csv_uni_a()
 
 def process():
     process_flores()
@@ -85,29 +79,29 @@ tags= list
 """
 with DAG(
     'Universidades_a',
-    default_args=default_args,
-    description='Dag for A universities',
-    schedule_interval=timedelta(hours=1),
-    start_date=days_ago(2),
-    tags=['Universidad De Flores','Universidad Nacional De Villa María'],
+    default_args= default_args,
+    description= 'Dag for A universities',
+    schedule_interval= timedelta(hours=1),
+    start_date= days_ago(2),
+    tags= ['Universidad De Flores','Universidad Nacional De Villa María'],
 ) as dag:
 
     #define tasks
 
-    scrape_task=PythonOperator(task_id='scrape',
-                                python_callable=scrape, 
-                                dag=dag, 
-                                retries=5)
+    scrape_task= PythonOperator(task_id= 'scrape',
+                                python_callable= scrape, 
+                                dag= dag, 
+                                retries= 5)
 
-    process_task=PythonOperator(task_id='process', 
-                                 python_callable=process, 
-                                 dag=dag, 
-                                 retries=5)
+    process_task=PythonOperator(task_id= 'process', 
+                                 python_callable= process, 
+                                 dag= dag, 
+                                 retries= 5)
 
-    save_task=PythonOperator(task_id='save', 
-                              python_callable=save, 
-                              dag=dag, 
-                              retries=5)
+    save_task=PythonOperator(task_id= 'save', 
+                              python_callable= save, 
+                              dag= dag, 
+                              retries= 5)
 
     #Dependency between tasks/order
 
