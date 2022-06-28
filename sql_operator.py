@@ -14,11 +14,9 @@ def extract():
         cursor=connection.cursor()
         f_sql = open('consulta.sql','r',encoding='utf-8')
         sql_query=f_sql.read()
-        cursor.execute(sql_query)
-        s=cursor.fetchall()
-        df = pd.DataFrame(s)
-        df.to_csv(f'exported_data.csv',index=True,header=False)
-        print(f'Successful Connection')
+        df=pd.read_sql(sql_query, connection)
+        df.to_csv(f'exported_data.csv',index=False)
+
 
     except Exception as e:
         print(e)
