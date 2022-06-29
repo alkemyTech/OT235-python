@@ -7,44 +7,46 @@ import logging
 
 
 
-def get_data():
 
-# Instantiate sqlachemy.create_engine object
+def obtener_del_sql():
+
+# Creo la conexion
     engine = create_engine('postgresql://alkymer2:Alkemy23@training-main.cghe7e6sfljt.us-east-1.rds.amazonaws.com:5432/training')
 
-  #Define SQL query
+  #Genero la conexion, abro el archivo de la query sql y la guardo en query_universidad
     with engine.connect() as con:
         with open("../universidades_h.sql") as file:
             query = file.read()
-            result=query.split("#")
+            query_universidad=query.split("#")
 
-    #Read data into pandas dataframe
-            df = pd.read_sql(result[0], con)
+    #Leo del sql y guardo en dataframe pandas
+            df_u_cine = pd.read_sql(query_universidad[0], con)
 
-            u_cine_logger.info('Consulta Universidad Del Cine')
+    #Guardo en files en csv
+            df_u_cine.to_csv('../files/u_cine_universidades_h.csv', index=False)
 
-            df.to_csv('../files/u_cine.csv', index=False)
-
-            df = pd.read_sql(result[1], con)
+    #Leo del sql y guardo en dataframe pandas
+            df_uba = pd.read_sql(query_universidad[1], con)
+    
+    #Guardo en files en csv
+            df_uba.to_csv('../files/uba_universidades_h.csv', index=False)
             
-            df.to_csv('../files/uba.csv', index=False)
-            
-            uba_logger.info('Consulta UBA')
 
 
 with DAG(
-	'obtener_info',
-	description='obtener_del_sql',
-	schedule_interval='@hourly',
-	start_date=datetime(2022, 6, 21),
+    'obtener_del_sql',
+    description='obtener_del_sql',
+    schedule_interval='@hourly',
+    start_date=datetime(2022, 6, 21),
 ) as dag:
 
-	tarea_1=PythonOperator(
-        task_id='get_data',
-        python_callable=get_data,
+    tarea_1=PythonOperator(
+        task_id='obtener_del_sql',
+        python_callable=obtener_del_sql,
         retries= 5,
         retry_delay=timedelta(minutes=2),
         )
 
 
-	tarea_1 
+    tarea_1 
+    
