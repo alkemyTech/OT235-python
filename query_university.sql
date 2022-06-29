@@ -1,37 +1,35 @@
 -- SQL queries to get students data from two universities:
---   -Universidad De Morón
---   -Universidad Nacional De Río Cuarto
+--   - Universidad De Morón
+--   - Universidad Nacional De Río Cuarto
 
-SELECT
-university,
-career,
-inscription_date,
-first_name,
-last_name,
-gender,
-YEAR(CURRENT_TIMESTAMP) - YEAR(date_of_birth) as age,
-postal_code,
-location,
-email
-FROM universidades
+-- Universidad De Morón
+select
+universidad,
+carrerra,
+fechaiscripccion,
+nombrre,
+sexo,
+nacimiento,
+codgoposstal,
+eemail
+from moron_nacional_pampa
 WHERE 
-university LIKE 'Morón'
-AND inscription_date between '01/9/2020' AND '01/02/2021'
+universidad LIKE '%morón%'
+AND TO_DATE(fechaiscripccion,'%dd/%mm/%YYYY') BETWEEN '2020-09-01' AND '2021-02-01'
 
 
-
-SELECT
-university,
-career,
-inscription_date,
-first_name,
-last_name,
-gender,
-YEAR(CURRENT_TIMESTAMP) - YEAR(date_of_birth) as age,
-postal_code,
-location,
+-- Universidad Nacional De Río Cuarto
+select
+univiersities,
+carrera,
+inscription_dates,
+names,
+sexo,
+fechas_nacimiento,
+localidad,
 email
-FROM universidades
-WHERE university LIKE 'Río Cuarto'
-AND inscription_date between '01/9/2020' AND '01/02/2021'
+from rio_cuarto_interamericana
+WHERE 
+univiersities LIKE '%cuarto%'
+AND TO_DATE(inscription_dates,'%dd/%MON/%YY') BETWEEN '01/9/2020' AND '01/02/2021'
 
