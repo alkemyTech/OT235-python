@@ -1,7 +1,8 @@
 import psycopg2
-import pandas
+import pandas as pd
 
 """Function to extract data to sql"""
+#Extrac data from SQl host and export in csv files 
 def extract():
     try:
         connection=psycopg2.connect(
@@ -12,10 +13,15 @@ def extract():
         )
 
         cursor=connection.cursor()
-        f_sql = open('consulta.sql','r',encoding='utf-8')
-        sql_query=f_sql.read()
-        df=pd.read_sql(sql_query, connection)
-        df.to_csv(f'exported_data.csv',index=False)
+        lat_sociales_open = open('lat_sociales_query.sql','r',encoding='utf-8')
+        lat_sociales_query=lat_sociales_open.read()
+        df=pd.read_sql(lat_sociales_query, connection)
+        df.to_csv(f'lat_sociales_data.csv',index=False)
+
+        kennedy_open = open('kennedy_query.sql','r',encoding='utf-8')
+        kennedy_query=kennedy_open.read()
+        df=pd.read_sql(kennedy_query, connection)
+        df.to_csv(f'kennedy_data.csv',index=False)
 
 
     except Exception as e:
@@ -26,5 +32,4 @@ def extract():
         connection.close()
         print('Conexion finalizada')
 
-#DAG Operator
-extract_sql=PythonOperator(task_id="extract", python_callable=extract)
+extract()
