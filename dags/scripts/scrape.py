@@ -19,22 +19,53 @@ def read_query(path: str) -> str:
     query = open(path, 'rb').read().decode('utf-8')
 
     return query
+    
+def querys_address():
+    """
+    Get the list of SQL queries along with their directories
+    :return: address list of each of the SQL queries
+    """
+    querys= []
+    root= os.path.abspath(os.getcwd())+"/dags/querys"
+    list_querys= os.listdir(root)
+    for script in list_querys:
+        querys.append(root+"/"+script)
 
-def create_csv_uni_a():
+    return querys
+    
+def create_csv(querys):
     """
     Perform the SQL query and generate the CSV
     """
-    root= os.path.abspath(os.getcwd())
-    root_q= root+"/dags/querys/universidades_a.sql"
+    #Create the file folder if it doesn't exist
+    folder = os.path.abspath(os.getcwd())+"/dags/files"
+    os.makedirs(folder, exist_ok=True)
 
-    cursor.execute(read_query(root_q))
-    result_query= cursor.fetchall()
+    #Create the csv
+    for script in querys:
+        query= read_query(script)
+        cursor.execute(query)
+        result_query= cursor.fetchall()
 
-    root_f= root+"/dags/files/universidades_a.csv"
 
-    with open(root_f, 'w', newline='') as file:
-        writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=',')
-        writer.writerows(result_query)
+        #Address for the csv
+        csv_format= script.replace(".sql", ".csv")
+        csv_script= csv_format.replace("/querys/", "/files/")
+
+        with open(csv_script, 'w', newline='') as file:
+            writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=',')
+            writer.writerows(result_query)
+
+
+        
+
+def extract_data():
+    #Get query address
+    querys= querys_address()
+
+    #Create CSV for each query
+    create_csv(querys)
+
 
 if __name__ == '__main__':
-    create_csv_uni_a()
+    extract_data()
