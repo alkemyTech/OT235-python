@@ -6,7 +6,7 @@ import pandas as pd
 import logging
 
 
-def process_data():
+def procesar_universidades_h_pandas():
 
     process_ucine()
     
@@ -21,14 +21,15 @@ def process_uba():
     pass
 
 with DAG(
-	'process',
-	description='procesar_la_info',
+	'procesar_universidades_h_pandas',
+	description='procesar_universidades_h_pandas',
 	schedule_interval='@hourly',
 	start_date=datetime(2022, 6, 21),
 	) as dag:
 
-	tarea_2=PythonOperator(
-        task_id='process_data',
-        python_callable=process_data
+	tarea_1=PythonOperator(
+        task_id='procesar_universidades_h_pandas',
+        python_callable=procesar_universidades_h_pandas
         )
-	tarea_2 
+	
+	tarea_1
