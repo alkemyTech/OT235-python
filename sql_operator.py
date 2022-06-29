@@ -10,6 +10,7 @@ import os
 """
 DAG Description:
 
+DAG to obtain data for universities of group F from SQL database
 """
 
 #logging config
