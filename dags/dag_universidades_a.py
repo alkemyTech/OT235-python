@@ -1,12 +1,9 @@
-import os
 import logging
-from airflow import DAG
-from asyncio import Task
 from datetime import timedelta
-from email.policy import default
+from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
-from scripts.scrape import create_csv_uni_a
+from scripts.scrape import extract_data
 from scripts.process import process_flores, process_v_maria
 
 """ 
@@ -53,7 +50,7 @@ default_args={
 #Define functions
 
 def scrape():
-    create_csv_uni_a()
+    extract_data()
 
 def process():
     process_flores()
