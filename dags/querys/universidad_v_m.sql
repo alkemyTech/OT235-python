@@ -3,6 +3,7 @@ SELECT universidad as university,
        carrera as career,
        fecha_de_inscripcion as inscription_date,
        nombre as name,
+       sexo as gender,
        fecha_nacimiento as age,
        localidad as location,
        email as email

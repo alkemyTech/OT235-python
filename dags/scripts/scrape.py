@@ -47,6 +47,17 @@ def create_csv(querys):
         cursor.execute(query)
         result_query= cursor.fetchall()
 
+        #Name db
+        lista_query= query.split()
+        name_db= lista_query[lista_query.index("FROM")+1]
+
+        #Headers
+        lista_header= query.split()
+        header= []
+        for post in range(len(lista_header)):
+           if (lista_header[post]=='as'):
+                header_c= lista_header[post+1].replace(',','')
+                header.append(header_c)
 
         #Address for the csv
         csv_format= script.replace(".sql", ".csv")
@@ -54,10 +65,13 @@ def create_csv(querys):
 
         with open(csv_script, 'w', newline='') as file:
             writer = csv.writer(file, quoting=csv.QUOTE_ALL,delimiter=',')
+            writer.writerow(header)
             writer.writerows(result_query)
 
+                
+            
+    cursor.close()
 
-        
 
 def extract_data():
     #Get query address
@@ -66,6 +80,8 @@ def extract_data():
     #Create CSV for each query
     create_csv(querys)
 
+def main():
+    extract_data()
 
 if __name__ == '__main__':
-    extract_data()
+    main()
