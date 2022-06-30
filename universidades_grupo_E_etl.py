@@ -16,6 +16,7 @@ from airflow.operators.dummy import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 import logging
 from scripts.process_data import process_data_univ
+from scripts.extract_data import extract_from_db
 
 # logging configuration
 logging.basicConfig(level=logging.INFO,
@@ -45,10 +46,12 @@ with DAG(
 
     # tasks (dummy tasks must be replaced in future versions):
     # Retry configuration in Extract task where database connection takes place
-    extract = DummyOperator(task_id='extract', retries=5,
-                            retry_delay=timedelta(minutes=5))
-    transform = PythonOperator(
-        task_id='transform', python_callable=process_data_univ)
+    extract = PythonOperator(task_id='extract',
+                             python_callable=extract_from_db,
+                             retries=5,
+                             retry_delay=timedelta(minutes=5))
+    transform = PythonOperator(task_id='transform',
+                               python_callable=process_data_univ)
     load = DummyOperator(task_id='load')
 
     extract >> transform >> load
