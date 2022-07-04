@@ -12,11 +12,12 @@
 """
 from airflow import DAG
 from datetime import timedelta, datetime
-from airflow.operators.dummy import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 import logging
 from scripts.process_data import process_data_univ
 from scripts.extract_data import extract_from_db
+from scripts.upload_file import upload_to_s3
+
 
 # logging configuration
 logging.basicConfig(level=logging.INFO,
@@ -52,6 +53,8 @@ with DAG(
                              retry_delay=timedelta(minutes=5))
     transform = PythonOperator(task_id='transform',
                                python_callable=process_data_univ)
-    load = DummyOperator(task_id='load')
+    load = PythonOperator(task_id='load',
+                          python_callable=upload_to_s3,
+                          op_kwargs={'bucket_name': 'cohorte-junio-a192d78b'})
 
     extract >> transform >> load
