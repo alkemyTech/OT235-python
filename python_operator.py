@@ -7,6 +7,6 @@ def transform():
         pass
 
     latino_transform()
-    kenedy_transform()
+    kennedy_transform()
 
 transform_data=PythonOperator(task_id="transform", python_callable=transform)

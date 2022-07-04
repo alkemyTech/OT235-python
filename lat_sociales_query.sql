@@ -3,7 +3,6 @@
 SELECT  universities,
         careers,
         inscription_dates AS inscription_date,
-		SPLIT_PART("names",'-',2) AS last_name,
 		SUBSTRING(names from 1 for (POSITION('-' in names) - 1)) AS first_name,
 		SUBSTRING(names from (POSITION('-' in names) + 1) for LENGTH(names)) AS last_name,
         sexo AS gender,
