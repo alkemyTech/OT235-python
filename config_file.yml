@@ -1,0 +1,13 @@
+default:
+  default_args:
+    owner: "default_owner"
+    start_date: 2022-07-06
+    retries: 5
+    retry_delay_sec: 5
+  schedule_interval: "@hourly	"
+
+tasks:
+  task_3:
+    operator: airflow.operators.python_operator.PythonOperator
+    python_callable_name: print_hello
+    python_callable_file: /Users/buraky/Projects/dag-factory/examples/print_hello.py #path to functions

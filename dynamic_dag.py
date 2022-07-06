@@ -3,7 +3,7 @@ import dagfactory
 from pathlib import Path
 
 """Create Yml path and create DAG from here"""
-yml_path = Path(r"C:\Users\lugon\OneDrive\Escritorio\acceleracion_alkemy\OT235-python\config_file.yml")
+yml_path = Path(r'C:\Users\lugon\OneDrive\Escritorio\acceleracion_alkemy\OT235-python\config_file.yml')
 dag_factory = dagfactory.DagFactory(yml_path)
 
 
