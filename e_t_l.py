@@ -67,6 +67,11 @@ def load_comahue():
     with open('comahue.txt', 'rb') as f:
         s3.upload_fileobj(f, bucket_name, 'comahue.txt')
 
+def load_salvador():
+    with open('salvador.txt', 'rb') as f:
+        s3.upload_fileobj(f, bucket_name, 'salvador.txt')
+
 # Python_callable
 def load_data():
     load_comahue()
+    load_salvador()
