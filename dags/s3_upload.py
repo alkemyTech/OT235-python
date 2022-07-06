@@ -10,8 +10,8 @@ def upload_to_s3(filename: str,  bucket_name: str) -> None:
 
 
 with DAG(
-	's3_dag',
-	description='upload to s3',
+	's3_dag_uni_a',
+	description='upload to s3 .txt files of the universities',
 	schedule_interval='@hourly',
 	start_date=datetime(2022, 7, 3),
     catchup=False
