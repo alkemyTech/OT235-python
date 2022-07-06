@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import psycopg2
 from decouple import config
+import boto3
 
 
 ##### EXTRACT DATA #####
@@ -57,6 +58,15 @@ def transform_data():
 
 ##### LOAD DATA #####
 
+aws_access_key_id = config('aws_access_key_id')
+aws_secret_access_key = config('aws_secret_access_key')
+bucket_name = config('bucket_name')
+s3=boto3.client('s3', aws_access_key_id=aws_access_key_id,aws_secret_access_key=aws_secret_access_key)
+
+def load_comahue():
+    with open('comahue.txt', 'rb') as f:
+        s3.upload_fileobj(f, bucket_name, 'comahue.txt')
+
 # Python_callable
 def load_data():
-    pass
+    load_comahue()
