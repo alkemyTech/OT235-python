@@ -19,7 +19,7 @@ def upload_to_s3():
     s3_client = boto3.client('s3')
     try:
         response = s3_client.upload_file('lat_sociales.txt', 'bucket', 'lat_sociales.txt')
-        response = s3_client.upload_file('kennedy.txt', 'bucket', 'lat_sociales.txt')
+        response = s3_client.upload_file('kennedy.txt', 'bucket', 'kennedy.txt')
     except ClientError as e:
         logging.error(e)
         return False
