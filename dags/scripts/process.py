@@ -84,16 +84,16 @@ def process_flores() -> str:
     df_join = pd.merge(df, df_postal, left_on='postal_code', right_on='codigo_postal', how='left').drop_duplicates()
 
     # normalize the data
-    df_join['university'] = df_join['university'].str.lower().str.replace(' ', '').str.replace('-', '')
-    df_join['career'] = df_join['career'].str.lower().str.replace(' ', '').str.replace('-', '')
+    df_join['university'] = df_join['university'].str.lower().str.replace('_', ' ').str.replace('-', '')
+    df_join['career'] = df_join['career'].str.lower().str.replace('_', ' ').str.replace('-', '')
     df_join['inscription_date'] = pd.to_datetime(df_join['inscription_date'], format= '%Y-%m-%d').astype(str)
     df_join['first_name'] = df_join['name'].apply(get_first_name)
     df_join['last_name'] = df_join['name'].apply(get_last_name)
     df_join['gender'] = df_join.apply(choice_gender, axis=1)
-    df_join['location'] = df_join['localidad'].str.lower().str.replace(' ', '').str.replace('-', '')
+    df_join['location'] = df_join['localidad'].str.lower().str.replace('_', ' ').str.replace('-', '')
     # calculate age
     df_join['age'] = df_join['age'].apply(calculate_age)
-    df_join['email'] = df_join['email'].str.lower().str.replace(' ', '').str.replace('-', '')
+    df_join['email'] = df_join['email'].str.lower().str.replace('_', ' ').str.replace('-', '')
 
     df_join = df_join[['university', 'career', 'inscription_date', 'first_name', 'last_name', 'gender',
                        'age','postal_code','location','email']]
@@ -116,17 +116,17 @@ def process_v_maria():
     df_join = pd.merge(df, df_postal, left_on='location', right_on='localidad', how='left').drop_duplicates()
 
     # normalize the data
-    df_join['university'] = df_join['university'].str.lower().str.replace(' ', '').str.replace('-', '')
-    df_join['career'] = df_join['career'].str.lower().str.replace(' ', '').str.replace('-', '')
+    df_join['university'] = df_join['university'].str.lower().str.replace('_', ' ').str.replace('-', '')
+    df_join['career'] = df_join['career'].str.lower().str.replace('_', ' ').str.replace('-', '')
     df_join['inscription_date'] = pd.to_datetime(df_join['inscription_date'], format= '%d-%b-%y').astype(str)
     df_join['first_name'] = df_join['name'].apply(get_first_name)
     df_join['last_name'] = df_join['name'].apply(get_last_name)
     df_join['gender'] = df_join.apply(choice_gender, axis=1)
-    df_join['location'] = df_join['localidad'].str.lower().str.replace(' ', '').str.replace('-', '')
+    df_join['location'] = df_join['localidad'].str.lower().str.replace('_', ' ').str.replace('-', '')
     df_join['postal_code'] = df_join['codigo_postal'].astype(str)
     # calculate age
     df_join['age'] = df_join['age'].apply(calculate_age_v)
-    df_join['email'] = df_join['email'].str.lower().str.replace(' ', '').str.replace('-', '')
+    df_join['email'] = df_join['email'].str.lower().str.replace('_', ' ').str.replace('-', '')
     df_join = df_join[['university', 'career', 'inscription_date', 'first_name', 'last_name', 'gender',
                        'age','postal_code','location','email']]
 
