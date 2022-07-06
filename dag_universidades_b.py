@@ -1,7 +1,8 @@
 import logging
 from datetime import timedelta, datetime
 from airflow import DAG
-from airflow.operators.dummy import DummyOperator
+from airflow.operators.python import PythonOperator
+from e_t_l import extract_data, transform_data, load_data
 
 
 ### LOGS ###
@@ -33,8 +34,8 @@ with DAG(
         schedule_interval=timedelta(hours=1),
         start_date=datetime(2022, 6, 20)
 ) as dag:
-    extract = DummyOperator(task_id='extract')
-    transform = DummyOperator(task_id='transform')
-    load = DummyOperator(task_id='load')
+    extract = PythonOperator(task_id='extract_data', python_callable=extract_data)
+    transform = PythonOperator(task_id='transform_data', python_callable=transform_data)
+    load = PythonOperator(task_id='transform_data', python_callable=load_data)
 
     extract >> transform >> load
