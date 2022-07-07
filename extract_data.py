@@ -4,6 +4,7 @@ from airflow.operators.python import PythonOperator
 import logging
 import psycopg2
 import pandas as pd
+import datetime
 from decouple import config
 import os
 
@@ -21,7 +22,7 @@ logging.basicConfig(
 )
 
 def query_universities_f():
-    #db conecction
+    #conexión db
     logging.info('Conectando a la DB')
     conn = psycopg2.connect(
                 host=config("HOST"),
@@ -33,12 +34,12 @@ def query_universities_f():
     #cursor
     cur = conn.cursor()
 
-    #query definition
+    #definición de queries
     with open("query_universities_f.sql", encoding='utf-8') as query_file:
         content = query_file.read()
         queries = content.split("-- Universidad Nacional De Río Cuarto")
 
-    #execute queries
+    #ejecuta queries
     logging.info('Ejecutando las consultas a la DB')
     cur.execute(queries[0])
     result_moron = cur.fetchall()
@@ -46,16 +47,18 @@ def query_universities_f():
     cur.execute(queries[1])
     result_cuarto = cur.fetchall()
 
-    #result of queries to csv
+    #resultados de queries a csv
     df_moron = pd.DataFrame(result_moron)
     df_cuarto = pd.DataFrame(result_cuarto)
 
     logging.info('Guardando los resultados')
     
+    #crea carpeta para guardar
     outdir = './files'
     if not os.path.exists(outdir):
         os.mkdir(outdir)
 
+    #guarda archivos resultantes
     outname = 'universidad_moron.csv'
     fullname = os.path.join(outdir, outname)
     df_moron.to_csv(fullname)
@@ -69,6 +72,7 @@ def query_universities_f():
     cur.close()
     conn.close()
     logging.info('Conexión con la DB cerrada')
+
 
 
 default_args = {
