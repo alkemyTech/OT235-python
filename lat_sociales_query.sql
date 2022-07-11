@@ -1,12 +1,11 @@
 SELECT  universities,
-        careers,
+        careers as career,
         inscription_dates AS inscription_date,
-		SUBSTRING(nombre, 1, POSITION('_' IN names)) AS first_name,
-        SUBSTRING(nombre FROM POSITION('_' IN names)) AS last_name,
+		SUBSTRING(names from 1 for (POSITION('-' in names) - 1)) AS first_name,
+		SUBSTRING(names from (POSITION('-' in names) + 1) for LENGTH(names)) AS last_name,
         sexo AS gender,
 		EXTRACT(YEAR FROM age(TIMESTAMP 'NOW()',TO_DATE(birth_dates,'DD-MM-YYYY'))) AS age,
 		locations AS "location",
---      codigos_postales as postal_code,
         emails AS email
 FROM lat_sociales_cine 
 WHERE universities LIKE '-FACULTAD-LATINOAMERICANA-DE-CIENCIAS-SOCIALES'
