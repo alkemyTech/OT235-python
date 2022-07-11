@@ -40,5 +40,5 @@ with DAG(
             'bucket_name': 'cohorte-junio-a192d78b'
             }
     )
-
     task_upload_to_s3_flores >> task_upload_to_s3_maria
+
