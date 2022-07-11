@@ -1,0 +1,30 @@
+dag:
+  default_args:
+    owner: 'airflow'
+    start_date: 2018-06-23
+    retries: 1
+    retry_delay_sec: 30
+  schedule_interval: '@hourly'
+  description: 'Dag Universidades H'
+  on_success_callback_file: /home/sabrina/airflow/dags/Univ_H.py
+  on_failure_callback_file: /home/sabrina/airflow/dags/Univ_H.py
+  tasks:
+    task_1:
+      operator: airflow.operators.python_operator.PythonOperator
+      python_callable_name: my_logs
+      python_callable_file:  /home/sabrina/airflow/dags/Univ_H.py
+    task_2:
+      operator: airflow.operators.python_operator.PythonOperator
+      python_callable_name: extract_data
+      python_callable_file: /home/sabrina/airflow/dags/Univ_H.py
+      dependencies: [task_1]
+    task_3:
+      operator: airflow.operators.python_operator.PythonOperator
+      python_callable_name: normalize_data
+      python_callable_file: /home/sabrina/airflow/dags/Univ_H.py
+      dependencies: [task_2]
+    task_4:
+      operator: airflow.operators.python_operator.PythonOperator
+      python_callable_name: load_s3
+      python_callable_file: /home/sabrina/airflow/dags/Univ_H.py
+      dependencies: [task_3]  
