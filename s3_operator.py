@@ -1,5 +1,6 @@
 import logging
 import boto3
+from botocore.exceptions import NoCredentialsError
 from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
@@ -14,16 +15,29 @@ logging.basicConfig(
 
 
 """Function to load data S3"""
+
+ACCESS_KEY = 'AKIA24X5Z5Y2H4TL52MP'
+SECRET_KEY = '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'
+
 #Upload file .txt to AWS S3 with boto3
-def upload_to_s3():
-    s3_client = boto3.client('s3')
+def upload_to_s3(local_file, bucket, s3_file):
+    s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+                      aws_secret_access_key=SECRET_KEY)
+
     try:
-        response = s3_client.upload_file('lat_sociales.txt', 'bucket', 'lat_sociales.txt')
-        response = s3_client.upload_file('kennedy.txt', 'bucket', 'kennedy.txt')
-    except ClientError as e:
-        logging.error(e)
+        s3.upload_file(local_file, bucket, s3_file)
+        print("Upload Successful")
+        return True
+    except FileNotFoundError:
+        print("The file was not found")
         return False
-    return True
+    except NoCredentialsError:
+        print("Credentials not available")
+        return False
+
+
+uploaded = upload_to_aws('lat_sociales_data.txt', 'alkemy-acceleracion-lugonesnicolas', 'lat_sociales_data.txt')
+uploaded = upload_to_aws('kennedy_data.txt', 'alkemy-acceleracion-lugonesnicolas', 'kennedy_data.txt')
 
 
 logging.info('Inicio del ETL para el grupo de universidades G.')
