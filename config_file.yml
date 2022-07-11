@@ -5,9 +5,21 @@ default:
     retries: 5
     retry_delay_sec: 5
   schedule_interval: "@hourly	"
+  description: 'Dag Universidades B'
+
 
 tasks:
-  task_3:
+  task_1:
     operator: airflow.operators.python_operator.PythonOperator
-    python_callable_name: print_hello
-    python_callable_file: /Users/buraky/Projects/dag-factory/examples/print_hello.py #path to functions
+    python_callable_name: extract
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/extract_b.py
+
+    task_2:
+    operator: airflow.operators.python_operator.PythonOperator
+    python_callable_name: transform
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/transform_b.py
+
+    task_3:
+    operator: airflow.operators.python_operator.PythonOperator
+    python_callable_name: upload
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/extract_b.py
