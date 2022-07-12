@@ -12,8 +12,17 @@ def lat_norm():
     df['career'] = df['career'].str.replace('-',' ').str.strip().str.lower()
     df['inscription_date'] = pd.to_datetime(df['inscription_date'],format='%d-%m-%Y')
     df['inscription_date'] = df['inscription_date'].dt.strftime('%Y-%m-%d')
+    #replace pref suf
+    replace_pref=['MISS','MS','MR','DVM','DDS','MRS','MD','DR','md','dds','JR.','V','II','PHD','IV','III']
+    for i in replace_pref:
+        df['last_name']=df['last_name'].str.replace(i,'')
     df['last_name'] = df['last_name'].str.replace('-',' ').str.strip().str.lower()
+
+    for i in replace_pref:
+        df['first_name']=df['first_name'].str.replace(i,'')
     df['first_name'] = df['first_name'].str.replace('-',' ').str.strip().str.lower()
+
+
     df.loc[(df['gender'] == 'M'), 'gender'] = 'male'
     df.loc[(df['gender'] == 'F'), 'gender'] = 'female'
     df["age"] = df["age"].astype(int)
@@ -35,8 +44,16 @@ def kennedy_norm():
     df['career'] = df['career'].str.replace('-',' ').str.strip().str.lower()
     df['inscription_date'] = pd.to_datetime(df['inscription_date'],format = '%y-%b-%d')
     df['inscription_date'] = df['inscription_date'].dt.strftime('%Y-%m-%d')
+
+    replace_pref=['MISS','MS','MR','DVM','DDS','MRS','MD','DR','md','dds','JR.','V','II','PHD','IV','III']  
+    for i in replace_pref:
+        df['last_name']=df['last_name'].str.replace(i,'')
     df['last_name'] = df['last_name'].str.replace('-',' ').str.strip().str.lower()
+
+    for i in replace_pref:
+        df['first_name']=df['first_name'].str.replace(i,'')
     df['first_name'] = df['first_name'].str.replace('-',' ').str.strip().str.lower()
+
     df.loc[(df['gender'] == 'm'), 'gender'] = 'male'
     df.loc[(df['gender'] == 'f'), 'gender'] = 'female'
     df["age"] = df["age"].astype(int)
