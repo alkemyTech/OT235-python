@@ -5,21 +5,36 @@ default:
     retries: 5
     retry_delay_sec: 5
   schedule_interval: "@hourly	"
-  description: 'Dag Universidades B'
+  description: 'Dag Universidades B y G'
 
 
 tasks:
-  task_1:
+  extract_b:
     operator: airflow.operators.python_operator.PythonOperator
     python_callable_name: extract
     python_callable_file: /home/lnicolas/acceleracion_alkemy/extract_b.py
 
-    task_2:
+  transform_b:
     operator: airflow.operators.python_operator.PythonOperator
     python_callable_name: transform
     python_callable_file: /home/lnicolas/acceleracion_alkemy/transform_b.py
 
-    task_3:
+  load_b:
     operator: airflow.operators.python_operator.PythonOperator
     python_callable_name: upload
-    python_callable_file: /home/lnicolas/acceleracion_alkemy/extract_b.py
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/load_b.py
+
+  extract_g:
+    operator: airflow.operators.python_operator.PythonOperator
+    python_callable_name: Extract
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/sql_operator.py
+
+  transform_g:
+    operator: airflow.operators.python_operator.PythonOperator
+    python_callable_name: Transform
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/pandas_norm.py
+
+  load_g:
+    operator: airflow.operators.python_operator.PythonOperator
+    python_callable_name: Load
+    python_callable_file: /home/lnicolas/acceleracion_alkemy/s3_operator.py
