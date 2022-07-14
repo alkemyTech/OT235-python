@@ -7,29 +7,27 @@ def lat_norm():
     df_pc = pd.read_csv('codigos_postales.csv',sep=',')
 
     #normalized data
-    df['universities'] = df['universities'].str.replace('-',' ').str.strip().str.lower()
-    df.rename(columns={'universities': 'university', }, inplace=True)
+    df['university'] = df['university'].str.replace('-',' ').str.strip().str.lower()
     df['career'] = df['career'].str.replace('-',' ').str.strip().str.lower()
     df['inscription_date'] = pd.to_datetime(df['inscription_date'],format='%d-%m-%Y')
     df['inscription_date'] = df['inscription_date'].dt.strftime('%Y-%m-%d')
-    #replace pref suf
-    replace_pref=['MISS','MS','MR','DVM','DDS','MRS','MD','DR','md','dds','JR.','V','II','PHD','IV','III']
+
+    #prefix replacement and name splitting
+    replace_pref=['MISS-','MS.-','MR.-','-DVM','-DDS','MRS.-','-MD','DR.-','-md','-dds','-JR.','-V','-II','-PHD','-IV','-III']
     for i in replace_pref:
-        df['last_name']=df['last_name'].str.replace(i,'')
-    df['last_name'] = df['last_name'].str.replace('-',' ').str.strip().str.lower()
+        df['fullname']==df['fullname'].str.replace(i,'')
+    df_clear_name = df['fullname'].str.strip().str.lower().str.split('-',expand=True)
+    df[['first_name','last_name']]=df_clear_name[[0,1]]
+    
 
-    for i in replace_pref:
-        df['first_name']=df['first_name'].str.replace(i,'')
-    df['first_name'] = df['first_name'].str.replace('-',' ').str.strip().str.lower()
-
-
+    #normalized data
     df.loc[(df['gender'] == 'M'), 'gender'] = 'male'
     df.loc[(df['gender'] == 'F'), 'gender'] = 'female'
     df["age"] = df["age"].astype(int)
     df['postal_code'] = df_pc['codigo_postal']
     df['location'] = df['location'].str.replace('-',' ').str.strip().str.lower()
     df['email'] = df['email'].str.replace('-',' ').str.strip().str.lower()
-    df = df.reindex(columns=['universities','career','inscription_date','first_name','last_name','gender','age','postal_code','location','email'])
+    df = df.reindex(columns=['university','career','inscription_date','first_name','last_name','gender','age','postal_code','location','email'])
 
     #export data
     df.to_csv('lat_sociales_data.txt')
@@ -45,19 +43,20 @@ def kennedy_norm():
     df['inscription_date'] = pd.to_datetime(df['inscription_date'],format = '%y-%b-%d')
     df['inscription_date'] = df['inscription_date'].dt.strftime('%Y-%m-%d')
 
-    replace_pref=['MISS','MS','MR','DVM','DDS','MRS','MD','DR','md','dds','JR.','V','II','PHD','IV','III']  
+    #prefix replacement and name splitting
+    replace_pref=['MISS-','MS.-','MR.-','-DVM','-DDS','MRS.-','-MD','DR.-','-md','-dds','-JR.','-V','-II','-PHD','-IV','-III']  
     for i in replace_pref:
-        df['last_name']=df['last_name'].str.replace(i,'')
-    df['last_name'] = df['last_name'].str.replace('-',' ').str.strip().str.lower()
+        df['fullname']==df['fullname'].str.replace(i,'')
+    df_clear_name = df['fullname'].str.strip().str.lower().str.split('-',expand=True)
+    df[['first_name','last_name']]=df_clear_name[[0,1]]
+    
 
-    for i in replace_pref:
-        df['first_name']=df['first_name'].str.replace(i,'')
-    df['first_name'] = df['first_name'].str.replace('-',' ').str.strip().str.lower()
-
+    #normalized data
     df.loc[(df['gender'] == 'm'), 'gender'] = 'male'
     df.loc[(df['gender'] == 'f'), 'gender'] = 'female'
     df["age"] = df["age"].astype(int)
     df['location'] = df['location'].str.replace('-',' ').str.replace('\n',' ').str.strip().str.lower().str.replace(',',' ')
+    df = df.reindex(columns=['university','career','inscription_date','first_name','last_name','gender','age','postal_code','location','email'])
 
     #export data
     df.to_csv('kennedy_data.txt')
