@@ -1,10 +1,12 @@
 import boto3
 from botocore.exceptions import NoCredentialsError
 
-ACCESS_KEY = 'AKIA24X5Z5Y2H4TL52MP'
-SECRET_KEY = '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'
+#Credenciales de coneccion
+ACCESS_KEY = config('aws_access_key_id')
+SECRET_KEY = config('aws_secret_access_key')
+bucket_name = config('bucket_name')
 
-
+#Funcion que toma por parametros, la direccion del archivo local, el nombre del bucket y el nombre del archivo
 def upload_to_aws(local_file, bucket, s3_file):
     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
                       aws_secret_access_key=SECRET_KEY)
@@ -20,6 +22,6 @@ def upload_to_aws(local_file, bucket, s3_file):
         print("Credentials not available")
         return False
 
-
+#Llamamos a la funcion 
 uploaded = upload_to_aws('lat_sociales_data.txt', 'alkemy-acceleracion-lugonesnicolas', 'lat_sociales_data.txt')
 uploaded = upload_to_aws('kennedy_data.txt', 'alkemy-acceleracion-lugonesnicolas', 'kennedy_data.txt')

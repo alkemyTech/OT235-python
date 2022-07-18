@@ -16,8 +16,10 @@ logging.basicConfig(
 
 """Function to load data S3"""
 
-ACCESS_KEY = 'AKIA24X5Z5Y2H4TL52MP'
-SECRET_KEY = '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'
+#Credenciales de coneccion
+ACCESS_KEY = config('aws_access_key_id')
+SECRET_KEY = config('aws_secret_access_key')
+bucket_name = config('bucket_name')
 
 #Upload file .txt to AWS S3 with boto3
 def upload_to_s3(local_file, bucket, s3_file):
