@@ -1,0 +1,38 @@
+Top 10 menos Vistos	
+        Id Vistas	
+0  1007183      0	
+1  1007186      0	
+2  1007193      0	
+3  1007194      0	
+4  1007196      0	
+5  1007197      0	
+6  1007201      0	
+7  1007202      0	
+8  1007204      0	
+9  1007205      0	
+Top 10 palabras en 10 post mas score Tipo Post=1	
+('programmer', 8)	
+('business', 5)	
+('web', 5)	
+('site', 5)	
+('project', 5)	
+('product', 5)	
+('ive', 4)	
+('time', 4)	
+('work', 4)	
+('question', 4)	
+Top 10 palabras en 10 post mas score Tipo Post=2	
+('language', 16)	
+('code', 10)	
+('type', 8)	
+('types', 7)	
+('oo', 6)	
+('favorites', 5)	
+('bar', 5)	
+('teach', 5)	
+('properly', 5)	
+('time', 5)	
+Minutos promedio de respuesta para los Top 300-400 post por score	
+9593	
+Tiempo de ejecucion--- 84.48451375961304 seconds ---	
+Registros leidos:  3496934 	

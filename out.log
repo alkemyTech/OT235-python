@@ -1,0 +1,38 @@
+Top 10 menos Vistos
+   Id Vistas
+0   7      0
+1  12      0
+2  18      0
+3  20      0
+4  21      0
+5  22      0
+6  26      0
+7  27      0
+8  28      0
+9  29      0
+Top 10 palabras en 10 post mas score Tipo Post=1
+('programmer', 8)
+('web', 5)
+('site', 5)
+('ive', 4)
+('business', 4)
+('question', 4)
+('random', 4)
+('hits', 4)
+('real', 3)
+('work', 3)
+Top 10 palabras en 10 post mas score Tipo Post=2
+('type', 8)
+('favorites', 5)
+('bar', 5)
+('aliases', 5)
+('symbol', 4)
+('alias', 4)
+('value', 4)
+('control', 3)
+('version', 3)
+('string', 3)
+Minutos promedio de respuesta para los Top 300-400 post por score
+17909
+Tiempo de ejecucion--- 3503.8982875347137 seconds ---
+Registros leidos:  3675852 
